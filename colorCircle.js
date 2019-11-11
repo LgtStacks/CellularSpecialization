@@ -11,7 +11,6 @@ function colorCircle(game, x, y, label) {
 
 colorCircle.prototype.update = function () {
 	this.updateMax();
-	console.log(this.maxVal);
 };
 
 colorCircle.prototype.draw = function (ctx) {
