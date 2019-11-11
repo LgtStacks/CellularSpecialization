@@ -24,7 +24,7 @@ colorCircle.prototype.update = function () {
 
 colorCircle.prototype.draw = function (ctx) {
 	this.ctx.beginPath();
-	this.ctx.arc(this.x, this.y, 200, 0, 2 * Math.PI);
+	this.ctx.arc(this.x, this.y, 20, 0, 2 * Math.PI);
 	this.ctx.stroke();
 	console.log("x:" + getX(22.6, 12));
 	console.log("y:" + getY(22.6, 12));
