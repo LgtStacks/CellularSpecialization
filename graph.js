@@ -151,17 +151,17 @@ Graph.prototype.updateMax = function () {
     if (tick > this.xSize) {
        // var recentRed = this.redData.slice(tick - this.xSize);
         //var recentGreen = this.greenData.slice(tick - this.xSize);
-		//var recentWhite = this.whiteData.slice(tick - this.xSize);
+		var recentWhite = this.whiteData.slice(tick - this.xSize);
         var recentTotal = this.totalData.slice(tick - this.xSize);
 
         this.maxVal = Math.max(//...recentRed,
 		                       //...recentGreen,
-							   //...recentWhite,
+							   ...recentWhite,
 							   ...recentTotal);
     } else {
         this.maxVal = Math.max(//...this.redData,
 							   //...this.greenData,
-							   //...this.whiteData,
+							   ...this.whiteData,
 							   ...this.totalData);
     }
 }

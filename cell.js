@@ -20,8 +20,8 @@ Cell.prototype.update = function () {
 			var newCell = this.game.board.board[newX][newY];
 			var bit = randomInt(2);
 			newCell.genome = this.genome + Math.pow(-1, bit) * Math.random() * params.cellOffspringVolatility;
-			if (newCell.genome < 0) newCell.genome = 0;
-			if (newCell.genome > 1) newCell.genome = 1;
+			if (newCell.genome < 0) newCell.genome = newCell.genome + 1;
+			if (newCell.genome > 1) newCell.genome = newCell.genome - 1;
 			newCell.color = hsl(Math.floor(360 * newCell.genome), 100, 50);
 			//console.log(newCell.color);
 

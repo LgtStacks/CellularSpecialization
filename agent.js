@@ -22,12 +22,18 @@ function Agent(game, x, y, agent) {
         this.genomeAvoid = agent.genomeAvoid + Math.pow(-1, bit3) * Math.random() * params.offspringVolatility;
         if (this.genomeAvoid < 0) this.genomeAvoid = this.genomeAvoid + 1;
         if (this.genomeAvoid > 1) this.genomeAvoid = this.genomeAvoid - 1;
+		
+		var bit4 = randomInt(2);
+		this.genomeHealPoisonRange = agent.genomeHealPoisonRange + Math.pow(-1, bit3) * Math.random() * params.offspringVolatility;
+		if (this.genomeHealPoisonRange < 0) this.genomeHealPoisonRange = 0;
+		if (this.genomeHealPoisonRange > 1) this.genomeHealPoisonRange = 1;
     }
     else {
         this.genomeFood = Math.random();
 		this.genomePoison = Math.random();
 		this.genomeAttract = Math.random();
 		this.genomeAvoid = Math.random();
+		this.genomeHealPoisonRange = Math.random();
     }
 
     var val = Math.floor(360 * this.genomeFood);
@@ -69,12 +75,13 @@ Agent.prototype.update = function () {
 		//Landed in a colored square
 		var dist = distance(Math.floor(360 * this.genomeFood), Math.floor(360 * cell.genome));//Calculate distance
 		var dist2 = distance(Math.floor(360 * this.genomePoison), Math.floor(360 * cell.genome));
-		if((Math.random() * params.healPoisonRange) > dist2){
+		if((Math.random() * this.genomeHealPoisonRange * 180) > dist2){
 			this.hits--;
 			cell.color = "Black";
 			//console.log("Poisoned");
 		}
-		if((Math.random() * params.healPoisonRange) > dist) {
+		console.log(this.genomeHealPoisonRange * 180);
+		if((Math.random() * this.genomeHealPoisonRange * 180) > dist) {
 			if (this.hits < this.maxHits && params.healingToggle) this.hits++;
             cell.color = "White";
 			//console.log("Healed");
