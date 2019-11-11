@@ -80,3 +80,13 @@ function average(data){
   var avg = sum / data.length;
   return avg;
 }
+
+function getRads(angle){
+	return angle * Math.PI/180
+};
+function getX(angle, distance) {
+	return distance * Math.cos(getRads(angle));
+};
+function getY(angle, distance) {
+	return distance * Math.sin(getRads(angle));
+};

@@ -1,5 +1,3 @@
-
-
 function Automata(game) {
 	this.firstDeath = true;
 	this.updateCounter = 0;
@@ -13,11 +11,13 @@ function Automata(game) {
 
 
 	 // data gathering
+	
     this.weightData = [];
 	this.poisonData = [];
 	this.attractData = [];
 	this.avoidData = [];
 	this.cellData = [];
+	this.colorCircData = [];
     //this.redPop = [];
     //this.greenPop = [];
 	this.whitePop = [];
@@ -25,8 +25,8 @@ function Automata(game) {
 	this.standardDeviation = [];
 
     // graphs
-	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
-	this.game.addEntity(this.colorCirc);
+	
+	
     this.popGraph = new Graph(game, 1210, 200, this, "Population");
     this.game.addEntity(this.popGraph);
     this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
@@ -43,6 +43,9 @@ function Automata(game) {
 	
 	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
 	this.game.addEntity(this.cellHist);
+	
+	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
+	this.game.addEntity(this.colorCirc);
 	
     // create board
     this.board = [];
@@ -70,6 +73,7 @@ Automata.prototype.updateData = function () {
 	var attractData = [];
 	var avoidData = [];
 	var cellData = [];
+	var colorCircData = [];
     var redPop = 0;
     var greenPop = 0;
 	var whitePop = 0;
@@ -84,6 +88,9 @@ Automata.prototype.updateData = function () {
 		avoidData.push(0);
 		cellData.push(0);
     }
+	for(var i = 0; i < 360; i++) {
+		colorCircData.push(0);
+	}
     for (var i = 0; i < 100; i++) {
         for (var j = 0; j < 100; j++) {
             var cell = this.board[i][j];
@@ -108,14 +115,17 @@ Automata.prototype.updateData = function () {
 		var avoidIndex = Math.abs(Math.floor(this.agents[k].genomeAvoid * 20) - Math.floor(this.agents[k].genomePoison * 20)) < 20 ? Math.abs(Math.floor(this.agents[k].genomeAvoid * 20) - Math.floor(this.agents[k].genomePoison * 20)) : 19;
         avoidData[avoidIndex]++;
 		
+		//var colorCircIndex = Math.floor(this.agents[k].genomeFood * 360) < 360 ? Math.floor(this.agents[k].genomeFood * 360) : 359;
+        //colorCircData[colorCircIndex]++;
 		
     }
 	for (var i = 0; i < 100; i++) {
         for (var j = 0; j < 100; j++) {
             var cell = this.board[i][j];
 			var cellIndex = Math.floor(cell.genome * 20) < 20 ? Math.floor(cell.genome * 20) : 19;
+			var colorCircIndex = Math.floor(cell.genome * 360) < 360 ? Math.floor(cell.genome * 360) : 359;
             cellData[cellIndex]++;
-            
+            colorCircData[colorCircIndex]++;
         }
     }
 
@@ -133,6 +143,8 @@ Automata.prototype.updateData = function () {
 	
 	this.cellData.push(cellData);
 	this.cellHist.data = this.cellData;
+	
+	this.colorCirc.data = colorCircData;
     //this.redPop.push(redPop);
     //this.greenPop.push(greenPop);
 	//this.whitePop.push(whitePop);

@@ -1,5 +1,3 @@
-
-
 function Cell(game,x,y) {
     this.x = x;
     this.y = y;
