@@ -1,12 +1,3 @@
-function getRads(angle){
-	return angle * (Math.PI/180)
-};
-function getX(angle, distance) {
-	return distance * Math.cos(getRads(angle));
-};
-function getY(angle, distance) {
-	return distance * Math.sin(getRads(angle));
-};
 function colorCircle(game, x, y, label) {
     this.xSize = 360;
     this.ySize = 180;
@@ -19,13 +10,31 @@ function colorCircle(game, x, y, label) {
 };
 
 colorCircle.prototype.update = function () {
-
+	this.updateMax();
+	console.log(this.maxVal);
 };
 
 colorCircle.prototype.draw = function (ctx) {
 	this.ctx.beginPath();
-	this.ctx.arc(this.x, this.y, 20, 0, 2 * Math.PI);
+	this.ctx.arc(this.x, this.y, 200, 0, 2 * Math.PI);
 	this.ctx.stroke();
-	console.log("x:" + getX(22.6, 12));
-	console.log("y:" + getY(22.6, 12));
+	this.ctx.closePath();
+	
+	for(var i = 0; i < 360; i++) {
+		if(this.data[i] > 0){
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.x, this.y);
+			this.ctx.lineTo(this.x + (getX(i, this.data[i] * 200 / this.maxVal) ), this.y + (getY(i, this.data[i]* 200 / this.maxVal) ));
+			this.ctx.strokeStyle = hsl(i, 100, 50);
+			this.ctx.stroke();
+			this.ctx.closePath();
+			this.ctx.font = "lighter 12px Courier New";
+			this.ctx.fillText(this.maxVal, this.x, this.y + 195);
+		}
+			
+	}
 };
+
+colorCircle.prototype.updateMax = function () {
+    this.maxVal = Math.max(...this.data);
+}

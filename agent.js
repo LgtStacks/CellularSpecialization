@@ -1,4 +1,3 @@
-
 function Agent(game, x, y, agent) {
     this.x = x;
     this.y = y;
