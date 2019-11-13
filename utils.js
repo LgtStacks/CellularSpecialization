@@ -33,6 +33,7 @@ function distance(first, second) {
 function hsl(h, s, l) {
     return "hsl(" + h + "," + s + "%," + l + "%)";
 }
+
 function getSettings() {
     params.brainPower = document.getElementById("brainPower").checked;
 	params.healingToggle = document.getElementById("healingToggle").checked;
@@ -76,7 +77,6 @@ function average(data){
   var sum = data.reduce(function(sum, value){
     return sum + value;
   }, 0);
-  //console.log(sum);
   var avg = sum / data.length;
   return avg;
 }

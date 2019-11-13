@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Cellular Automata</title>
 	<script type="text/javascript" src="./utils.js"></script>
+	<script type="text/javascript" src="./presets.js"></script>
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
 	<script type="text/javascript" src="./histogram.js"></script>
@@ -17,14 +18,17 @@
 <body>
     <canvas id="gameWorld" width="1600" height="800" style="border: 1px solid; background: white"></canvas>
 		<small id="counter">0</small><br>
-		Survival time: <input type="text" name="survive" id="survive" value="">
+		Survival time: <input type="text" name="survive" id="survive" value=""><br>
+		Pause: <input type="checkbox" name="Pause" id="Pause"><br>
+		
+		<input type="radio" name="density" value="sparse" onclick="preset_sparse()"> Sparse<br>
+		<input type="radio" name="density" value="dense" onclick="preset_dense()"> Dense<br>
 		<br>
-		Pause: <input type="checkbox" name="Pause" id="Pause">
-		<br>
-        AI Enabled: <input type="checkbox" name="brainPower" id="brainPower" checked>
-		<br>
-        Healing Toggle: <input type="checkbox" name="healingToggle" id="healingToggle" checked>
-		<br>
+		<input type="radio" name="stability" value="stable" onclick="preset_stable()"> Stable<br>
+		<input type="radio" name="stability" value="volatile" onclick="preset_volatile()"> Volatile<br>
+		<br><br>
+        AI Enabled: <input type="checkbox" name="brainPower" id="brainPower" checked><br>
+        Healing Toggle: <input type="checkbox" name="healingToggle" id="healingToggle" checked><br>
 		Wait Turns: <input type="text" name="waitTurns" id="waitTurns" value="300"><br>
 		Max Hits: <input type="text" name="maxHits" id="maxHits" value="7"><br>
 		Spawning Population: <input type="text" name="spawningPopulation" id="spawningPopulation" value="50"><br>
