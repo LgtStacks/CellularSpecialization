@@ -122,10 +122,13 @@ Automata.prototype.updateData = function () {
 	for (var i = 0; i < 100; i++) {
         for (var j = 0; j < 100; j++) {
             var cell = this.board[i][j];
-			var cellIndex = Math.floor(cell.genome * 20) < 20 ? Math.floor(cell.genome * 20) : 19;
-			var colorCircIndex = Math.floor(cell.genome * 360) < 360 ? Math.floor(cell.genome * 360) : 359;
-            cellData[cellIndex]++;
-            colorCircData[colorCircIndex]++;
+			if(cell.color !== "Black" && cell.color !== "White"){
+				var cellIndex = Math.floor(cell.genome * 20) < 20 ? Math.floor(cell.genome * 20) : 19;
+				var colorCircIndex = Math.floor(cell.genome * 360) < 360 ? Math.floor(cell.genome * 360) : 359;
+				cellData[cellIndex]++;
+				colorCircData[colorCircIndex]++;	
+			}
+			
         }
     }
 
