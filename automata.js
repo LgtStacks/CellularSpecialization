@@ -21,14 +21,19 @@ function Automata(game) {
     //this.redPop = [];
     //this.greenPop = [];
 	this.whitePop = [];
-    this.totalPop = [];
+    this.totalPopCell = [];
 	this.standardDeviation = [];
-
+	this.totalPopAgent = [];
+	this.standardDeviationAgent = [];
     // graphs
 	
 	
     this.popGraph = new Graph(game, 1210, 200, this, "Population");
     this.game.addEntity(this.popGraph);
+	
+	this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
+    this.game.addEntity(this.popGraph);
+	
     this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
     this.game.addEntity(this.weightHist);
 	
@@ -68,6 +73,7 @@ function Automata(game) {
 };
 Automata.prototype.updateData = function () {
 	var cellGenomes = [];
+	var agentGenomes = [];
     var weightData = [];
 	var poisonData = [];
 	var attractData = [];
@@ -77,8 +83,8 @@ Automata.prototype.updateData = function () {
     var redPop = 0;
     var greenPop = 0;
 	var whitePop = 0;
-	var totalPop = 0;
-	
+	var totalPopCell = 0;
+	var totalPopAgent = this.agents.length;
 	//console.log(standardDeviation);
 	
     for (var i = 0; i < 20; i++) {
@@ -96,12 +102,17 @@ Automata.prototype.updateData = function () {
             var cell = this.board[i][j];
 			cellGenomes.push(cell.genome);
 			if (cell.color !== "Black") {
-				totalPop+=1;
+				totalPopCell+=1;
 			}
             
         }
     }
-	var standardDeviation = standardDev(cellGenomes) * 10000;
+	for(var i =0; i< this.agents.length; i++){
+		var agent = this.agents[i];
+		agentGenomes.push(agent.genomeFood);
+	}
+	var standardDeviationAgent = Math.trunc(standardDev(agentGenomes) * 10000);
+	var standardDeviation = Math.trunc(standardDev(cellGenomes) * 10000);
     for (var k = 0; k < this.agents.length; k++) {
         var weightIndex = Math.floor(this.agents[k].genomeFood * 20) < 20 ? Math.floor(this.agents[k].genomeFood * 20) : 19;
         weightData[weightIndex]++;
@@ -151,8 +162,22 @@ Automata.prototype.updateData = function () {
     //this.redPop.push(redPop);
     //this.greenPop.push(greenPop);
 	//this.whitePop.push(whitePop);
-    this.totalPop.push(totalPop);
+    this.totalPopCell.push(totalPopCell);
 	this.standardDeviation.push(standardDeviation);
+	
+	this.totalPopAgent.push(totalPopAgent);
+	this.standardDeviationAgent.push(standardDeviationAgent);
+}
+
+Automata.prototype.serialize = function (skip) {
+    var text = "tick,popCountAgent,popCountCell\n";
+    for(var i = 0; i < this.totalPopAgent.length; i += skip) {
+        text += i + ",";
+        text += this.totalPopCell[i] + ",";
+        text += this.totalPopAgent[i] + "\n";
+    }
+
+    return text;
 }
 
 Automata.prototype.update = function () {
@@ -187,7 +212,14 @@ Automata.prototype.update = function () {
             this.board[i][j].update();
         }
     }
-	this.updateData();
+	if(this.updateCounter % 10 == 0){
+		this.updateData();
+	}
+	if(this.updateCounter == 1000){
+		var filename = "testFile";
+		download(filename + "-stats.csv", this.serialize(1));
+	}
+	
 };
 
 Automata.prototype.draw = function (ctx) {

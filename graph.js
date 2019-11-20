@@ -16,7 +16,7 @@ function Graph(game, x, y, automata, label) {
 
 Graph.prototype.update = function () {
 	this.whiteData = this.automata.standardDeviation;
-    this.totalData = this.automata.totalPop;
+    this.totalData = this.automata.totalPopCell;
     this.updateMax();
 }
 
