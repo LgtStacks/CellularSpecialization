@@ -1,3 +1,12 @@
+function download(filename, data) {
+    var pom = document.createElement('a');
+    var blob = new Blob([data], {type:"octet/stream"});
+    var url = window.URL.createObjectURL(blob);
+    pom.setAttribute('href', url);
+    pom.setAttribute('download', filename);
+    pom.click();
+}
+
 function graph(ctx, arr, max, count, x, y, width, height, style, text) {
     if(text && arr.length > 0) {
         ctx.fillStyle = "Black";
