@@ -23,7 +23,6 @@ Cell.prototype.update = function () {
 			if (newCell.genome < 0) newCell.genome = newCell.genome + 1;
 			if (newCell.genome > 1) newCell.genome = newCell.genome - 1;
 			newCell.color = hsl(Math.floor(360 * newCell.genome), 100, 50);
-			//console.log(newCell.color);
 
 		}			
     }

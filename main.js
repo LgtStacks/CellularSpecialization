@@ -8,6 +8,11 @@ var ASSET_MANAGER = new AssetManager();
 var gameEngine = new GameEngine();
 
 	ASSET_MANAGER.queueDownload("./img/960px-Blank_Go_board.png");
+	var socket = null;
+	if (window.io !== undefined) {
+		console.log("Database connected!");
+		socket = io.connect('http://24.16.255.56:8888');
+	}
 
 	ASSET_MANAGER.downloadAll(function () {
 		getSettings();

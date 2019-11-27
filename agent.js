@@ -75,7 +75,6 @@ Agent.prototype.update = function () {
 		//Landed in a colored square
 		var dist = distance(Math.floor(360 * this.genomeFood), Math.floor(360 * cell.genome));//Calculate distance
 		var dist2 = distance(Math.floor(360 * this.genomePoison), Math.floor(360 * cell.genome));
-		console.log(this.genomeHealPoisonRange * 180);
 		if((Math.random() * this.genomeHealPoisonRange * 180) > dist2){
 			this.hits--;
 			cell.color = "Black";
