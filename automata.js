@@ -1,3 +1,4 @@
+
 function Automata(game) {
 	this.firstDeath = true;
 	this.updateCounter = 0;
@@ -199,13 +200,6 @@ Automata.prototype.update = function () {
 		}
 		
 	}
-    
-
-    //while (this.agents.length < this.populationSize) {
-    //    var parent = this.agents[randomInt(this.agents.length)];
-    //    var agent = new Agent(this.game, parent.x, parent.y, parent);
-    //    this.agents.push(agent);
-    //}
 
     for (var i = 0; i < this.dimension; i++) {
         for (var j = 0; j < this.dimension; j++) {
@@ -230,7 +224,27 @@ Automata.prototype.update = function () {
 		var filename = "testFile";
 		download(filename + "-stats.csv", this.serialize(1));
 	}
-	
+	/*
+	if(this.updateCounter % (4*params.DLDB) == 0){
+		document.getElementById("sparse").checked = true;
+		document.getElementById("stable").checked = true;
+		document.getElementById("simStart").click();
+	}
+	else if(this.updateCounter % (3*params.DLDB) == 0){
+		document.getElementById("sparse").checked = true;
+		document.getElementById("volatile").checked = true;
+		document.getElementById("simStart").click();
+	}
+	else if(this.updateCounter % (2*params.DLDB) == 0){
+		document.getElementById("dense").checked = true;
+		document.getElementById("stable").checked = true;
+		document.getElementById("simStart").click();
+	}
+	else if(this.updateCounter % params.DLDB == 0){
+		document.getElementById("dense").checked = true;
+		document.getElementById("volatile").checked = true;
+		document.getElementById("simStart").click();
+	}*/
 };
 
 Automata.prototype.draw = function (ctx) {
