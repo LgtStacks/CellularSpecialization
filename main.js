@@ -19,8 +19,6 @@ var gameEngine = new GameEngine();
 		console.log("starting up da sheild");
 		var canvas = document.getElementById('gameWorld');
 		var ctx = canvas.getContext('2d');
-		//graphCtx = document.getElementById('graphWorld').getContext('2d');
-		//var gameEngine = new GameEngine();
 		gameEngine.init(ctx);
 		var automata = new Automata(gameEngine);
 		gameEngine.addEntity(automata);
