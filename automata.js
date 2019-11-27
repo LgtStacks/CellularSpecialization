@@ -18,8 +18,6 @@ function Automata(game) {
 	this.avoidData = [];
 	this.cellData = [];
 	this.colorCircData = [];
-    //this.redPop = [];
-    //this.greenPop = [];
 	this.whitePop = [];
     this.totalPopCell = [];
 	this.standardDeviation = [];
@@ -159,22 +157,24 @@ Automata.prototype.updateData = function () {
 	this.cellHist.data = this.cellData;
 	
 	this.colorCirc.data = colorCircData;
-    //this.redPop.push(redPop);
-    //this.greenPop.push(greenPop);
-	//this.whitePop.push(whitePop);
+	
     this.totalPopCell.push(totalPopCell);
+	
 	this.standardDeviation.push(standardDeviation);
 	
 	this.totalPopAgent.push(totalPopAgent);
+	
 	this.standardDeviationAgent.push(standardDeviationAgent);
 }
 
 Automata.prototype.serialize = function (skip) {
-    var text = "tick,popCountAgent,popCountCell\n";
+    var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells\n";
     for(var i = 0; i < this.totalPopAgent.length; i += skip) {
         text += i + ",";
         text += this.totalPopCell[i] + ",";
-        text += this.totalPopAgent[i] + "\n";
+        text += this.totalPopAgent[i] + ",";
+		text += this.standardDeviationAgent[i] + ",";
+		text += this.standardDeviation[i] + "\n";
     }
 
     return text;
@@ -215,7 +215,18 @@ Automata.prototype.update = function () {
 	if(this.updateCounter % 10 == 0){
 		this.updateData();
 	}
-	if(this.updateCounter == 1000){
+	if(this.updateCounter == params.DLDB && socket && document.getElementById("DB").checked) {
+        var runStats = {
+			popAgent: this.totalPopAgent,
+			popCell: this.totalPopCell,
+			stdDevAgents: this.standardDeviationAgent,
+			stdDevCells: this.standardDeviation
+        }
+        socket.emit("saveGS", runStats);
+        console.log("Sent to DB");
+    }
+
+	if(this.updateCounter == params.DLDB && document.getElementById("download").checked){
 		var filename = "testFile";
 		download(filename + "-stats.csv", this.serialize(1));
 	}

@@ -44,6 +44,7 @@ function hsl(h, s, l) {
 }
 
 function getSettings() {
+	params.DLDB = parseInt(document.getElementById("waitDLDB").value);
     params.brainPower = document.getElementById("brainPower").checked;
 	params.healingToggle = document.getElementById("healingToggle").checked;
     params.waitTurns = parseInt(document.getElementById("waitTurns").value);
