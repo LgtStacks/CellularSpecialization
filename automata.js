@@ -1,11 +1,10 @@
-
-function Automata(game) {
+function Automata(game, title) {
 	this.firstDeath = true;
 	this.updateCounter = 0;
     this.game = game;
     this.x = 0;
     this.y = 0;
-
+	this.title = title;
     this.dimension = 100;
     this.populationSize = params.spawningPopulation;
     this.agents = [];
@@ -27,29 +26,29 @@ function Automata(game) {
     // graphs
 	
 	
-    this.popGraph = new Graph(game, 1210, 200, this, "Population");
-    this.game.addEntity(this.popGraph);
+    //this.popGraph = new Graph(game, 1210, 200, this, "Population");
+    //this.game.addEntity(this.popGraph);
 	
-	this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
-    this.game.addEntity(this.popGraph);
+	//this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
+    //this.game.addEntity(this.popGraph);
 	
-    this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
-    this.game.addEntity(this.weightHist);
+    //this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
+    //this.game.addEntity(this.weightHist);
 	
-	this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
-    this.game.addEntity(this.poisonHist);
+	//this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
+    //this.game.addEntity(this.poisonHist);
 	
-	this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
-    this.game.addEntity(this.attractHist);
+	//this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
+    //this.game.addEntity(this.attractHist);
 	
-	this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
-    this.game.addEntity(this.avoidHist);
+	//this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
+    //this.game.addEntity(this.avoidHist);
 	
-	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
-	this.game.addEntity(this.cellHist);
+	//this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
+	//this.game.addEntity(this.cellHist);
 	
-	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
-	this.game.addEntity(this.colorCirc);
+	//this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
+	//this.game.addEntity(this.colorCirc);
 	
     // create board
     this.board = [];
@@ -141,7 +140,7 @@ Automata.prototype.updateData = function () {
 			
         }
     }
-
+	/*
     this.weightData.push(weightData);
     this.weightHist.data = this.weightData;
 	
@@ -158,7 +157,7 @@ Automata.prototype.updateData = function () {
 	this.cellHist.data = this.cellData;
 	
 	this.colorCirc.data = colorCircData;
-	
+	*/
     this.totalPopCell.push(totalPopCell);
 	
 	this.standardDeviation.push(standardDeviation);
@@ -166,6 +165,7 @@ Automata.prototype.updateData = function () {
 	this.totalPopAgent.push(totalPopAgent);
 	
 	this.standardDeviationAgent.push(standardDeviationAgent);
+	
 }
 
 Automata.prototype.serialize = function (skip) {
@@ -221,7 +221,7 @@ Automata.prototype.update = function () {
     }
 
 	if(this.updateCounter == params.DLDB && document.getElementById("download").checked){
-		var filename = "testFile";
+		var filename = this.title;
 		download(filename + "-stats.csv", this.serialize(1));
 	}
 	/*
@@ -252,7 +252,6 @@ Automata.prototype.draw = function (ctx) {
     for (var i = 0; i < this.dimension; i++) {
         for (var j = 0; j < this.dimension; j++) {
             var cell = this.board[i][j];
-            
             ctx.fillStyle = cell.color;
             ctx.fillRect(i * size, j * size, size, size);
         }

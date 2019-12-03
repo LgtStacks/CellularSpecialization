@@ -20,9 +20,15 @@ var gameEngine = new GameEngine();
 		var canvas = document.getElementById('gameWorld');
 		var ctx = canvas.getContext('2d');
 		gameEngine.init(ctx);
-		var automata = new Automata(gameEngine);
-		gameEngine.addEntity(automata);
-		gameEngine.board = automata;
+		
+		var Manager = new ExpManager(gameEngine);
+		gameEngine.addEntity(Manager);
+		gameEngine.board = Manager.automata;
+		
+		
+		//var automata = new Automata(gameEngine);
+		//gameEngine.addEntity(automata);
+		//gameEngine.board = automata;
 		gameEngine.start();
 	});
 function initiliaze_game(){
