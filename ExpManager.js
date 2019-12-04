@@ -9,7 +9,7 @@ function ExpManager(game) {
 }
 
 ExpManager.prototype.update = function() {
-	if(this.tick % 1000 == 0){
+	if(this.tick % params.DLDB == 0){
 		this.FreshStart();
 		this.run++;
 	}
@@ -22,17 +22,17 @@ ExpManager.prototype.draw = function(ctx) {
 }
 
 ExpManager.prototype.FreshStart = function() {
-	if(this.run % 4 == 0){
+	if(this.run % 4 == 3){
 		this.title = "SpSt#" + (this.run / 4);
 		document.getElementById("sparse").click();
 		document.getElementById("stable").click();
 	}
-	else if(this.run % 3 == 0){
+	else if(this.run % 4 == 2){
 		this.title = "SpVo#" + (this.run / 3);
 		document.getElementById("sparse").click();
 		document.getElementById("volatile").click();
 	}
-	else if(this.run % 2 == 0){
+	else if(this.run % 4 == 1){
 		this.title = "DeSt#" + (this.run / 2);
 		document.getElementById("dense").click();
 		document.getElementById("stable").click();
