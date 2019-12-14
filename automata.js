@@ -224,27 +224,6 @@ Automata.prototype.update = function () {
 		var filename = this.title;
 		download(filename + "-stats.csv", this.serialize(1));
 	}
-	/*
-	if(this.updateCounter % (4*params.DLDB) == 0){
-		document.getElementById("sparse").checked = true;
-		document.getElementById("stable").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % (3*params.DLDB) == 0){
-		document.getElementById("sparse").checked = true;
-		document.getElementById("volatile").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % (2*params.DLDB) == 0){
-		document.getElementById("dense").checked = true;
-		document.getElementById("stable").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % params.DLDB == 0){
-		document.getElementById("dense").checked = true;
-		document.getElementById("volatile").checked = true;
-		document.getElementById("simStart").click();
-	}*/
 };
 
 Automata.prototype.draw = function (ctx) {
