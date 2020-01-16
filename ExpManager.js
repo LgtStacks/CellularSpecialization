@@ -5,7 +5,7 @@ function ExpManager(game) {
 	this.automata = new Automata(game);
 	this.tick = 0;
 	this.run = 0;
-	this.title = "DeVo#0";
+	this.title = "CellVolAgentVol#0";
 }
 
 ExpManager.prototype.update = function() {
@@ -22,25 +22,51 @@ ExpManager.prototype.draw = function(ctx) {
 }
 
 ExpManager.prototype.FreshStart = function() {
-	if(this.run % 4 == 3){
-		this.title = "SpSt#" + (this.run / 4);
-		document.getElementById("sparse").click();
-		document.getElementById("stable").click();
+	if(this.run % 9 == 8){
+		this.title = "CellStAgentSt#" + Math.floor(this.run / 9);
+		document.getElementById("cellStable").click();
+		document.getElementById("agentStable").click();
 	}
-	else if(this.run % 4 == 2){
-		this.title = "SpVo#" + (this.run / 3);
-		document.getElementById("sparse").click();
-		document.getElementById("volatile").click();
+	else if(this.run % 9 == 7){
+		this.title = "CellStAgentMid#" + Math.floor(this.run / 9);
+		document.getElementById("cellStable").click();
+		document.getElementById("agentMid").click();
 	}
-	else if(this.run % 4 == 1){
-		this.title = "DeSt#" + (this.run / 2);
-		document.getElementById("dense").click();
-		document.getElementById("stable").click();
+	else if(this.run % 9 == 6){
+		this.title = "CellStAgentVol#" + Math.floor(this.run / 9);
+		document.getElementById("cellStable").click();
+		document.getElementById("agentVol").click();
+	}
+	else if(this.run % 9 == 5){
+		this.title = "CellMidAgentSt#" + Math.floor(this.run / 9);
+		document.getElementById("cellMid").click();
+		document.getElementById("agentStable").click();
+	}
+	else if(this.run % 9 == 4){
+		this.title = "CellMidAgentMid#" + Math.floor(this.run / 9);
+		document.getElementById("cellMid").click();
+		document.getElementById("agentMid").click();
+	}
+	else if(this.run % 9 == 3){
+		this.title = "CellMidAgentVol#" + Math.floor(this.run / 9);
+		document.getElementById("cellMid").click();
+		document.getElementById("agentVol").click();
+	}
+	else if(this.run % 9 == 2){
+		this.title = "CellVolAgentSt#" + Math.floor(this.run / 9);
+		document.getElementById("cellVol").click();
+		document.getElementById("agentStable").click();
+	}
+	else if(this.run % 9 == 1){
+		this.title = "CellVolAgentMid#" + Math.floor(this.run / 9);
+		document.getElementById("cellVol").click();
+		document.getElementById("agentMid").click();
 	}
 	else {
-		this.title = "DeVo#" + (this.run / 1);
-		document.getElementById("dense").click();
-		document.getElementById("volatile").click();
+		this.title = "CellVolAgentVol#" + Math.floor(this.run / 9);
+		document.getElementById("cellVol").click();
+		document.getElementById("agentVol").click();
+		console.log("Finished a round!!");
 	}
 	this.automata = new Automata(this.game, this.title);
 	this.game.board = this.automata;

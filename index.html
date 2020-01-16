@@ -30,6 +30,15 @@
 		<br>
 		<input type="radio" name="stability" value="stable" id = "stable" onclick="preset_stable()"> Stable<br>
 		<input type="radio" name="stability" value="volatile" id = "volatile" onclick="preset_volatile()"> Volatile<br>
+		
+		<input type="radio" name="cellOpt" value="cellStable" id = "cellStable" onclick="preset_cell_stable()"> Cell Stable<br>
+		<input type="radio" name="cellOpt" value="cellMid" id = "cellMid" onclick="preset_cell_mid()"> Cell Mid<br>
+		<input type="radio" name="cellOpt" value="cellVol" id = "cellVol" onclick="preset_cell_volatile()"> Cell Vol<br>
+		<br>
+		<input type="radio" name="agentOpt" value="agentStable" id = "agentStable" onclick="preset_agent_stable()"> Agent Stable<br>
+		<input type="radio" name="agentOpt" value="agentMid" id = "agentMid" onclick="preset_agent_mid()"> Agent Mid<br>
+		<input type="radio" name="agentOpt" value="agentVol" id = "agentVol" onclick="preset_agent_volatile()"> Agent Vol<br>
+		
 		<br><br>
 		DL/DB Time: <input type="text" name="waitDLDB" id="waitDLDB" value="1000"><br>
 		DB Send: <input type="checkbox" name="DB" id="DB"><br>
