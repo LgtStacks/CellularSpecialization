@@ -11,7 +11,6 @@ function Automata(game, title) {
 
 
 	 // data gathering
-	
     this.weightData = [];
 	this.poisonData = [];
 	this.attractData = [];
@@ -31,24 +30,24 @@ function Automata(game, title) {
 	
 	//this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
     //this.game.addEntity(this.popGraph);
+	/*
+    this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
+    this.game.addEntity(this.weightHist);
 	
-    //this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
-    //this.game.addEntity(this.weightHist);
+	this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
+    this.game.addEntity(this.poisonHist);
 	
-	//this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
-    //this.game.addEntity(this.poisonHist);
+	this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
+    this.game.addEntity(this.attractHist);
 	
-	//this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
-    //this.game.addEntity(this.attractHist);
+	this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
+    this.game.addEntity(this.avoidHist);
 	
-	//this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
-    //this.game.addEntity(this.avoidHist);
+	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
+	this.game.addEntity(this.cellHist);
 	
-	//this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
-	//this.game.addEntity(this.cellHist);
-	
-	//this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
-	//this.game.addEntity(this.colorCirc);
+	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
+	this.game.addEntity(this.colorCirc);*/
 	
     // create board
     this.board = [];
@@ -140,8 +139,8 @@ Automata.prototype.updateData = function () {
 			
         }
     }
-	/*
-    this.weightData.push(weightData);
+	
+    /*this.weightData.push(weightData);
     this.weightHist.data = this.weightData;
 	
 	this.poisonData.push(poisonData);
@@ -156,8 +155,8 @@ Automata.prototype.updateData = function () {
 	this.cellData.push(cellData);
 	this.cellHist.data = this.cellData;
 	
-	this.colorCirc.data = colorCircData;
-	*/
+	this.colorCirc.data = colorCircData;*/
+	
     this.totalPopCell.push(totalPopCell);
 	
 	this.standardDeviation.push(standardDeviation);
@@ -172,8 +171,8 @@ Automata.prototype.serialize = function (skip) {
     var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells\n";
     for(var i = 0; i < this.totalPopAgent.length; i += skip) {
         text += i + ",";
-        text += this.totalPopCell[i] + ",";
         text += this.totalPopAgent[i] + ",";
+        text += this.totalPopCell[i] + ",";
 		text += this.standardDeviationAgent[i] + ",";
 		text += this.standardDeviation[i] + "\n";
     }
@@ -206,7 +205,8 @@ Automata.prototype.update = function () {
             this.board[i][j].update();
         }
     }
-	if(this.updateCounter % 10 == 0){
+	//HOW OFTEN THE DATA IS UPDATED
+	if(this.updateCounter % 100 == 0){
 		this.updateData();
 	}
 	if(this.updateCounter == params.DLDB && socket && document.getElementById("DB").checked) {
