@@ -11,11 +11,17 @@ function Automata(game, title) {
 
 
 	 // data gathering
+	this.cellAgentFoodDiff = [];
+	this.poisonAvoidDiff = [];
+	this.foodAttractDiff = [];
     this.weightData = [];
+	
 	this.poisonData = [];
 	this.attractData = [];
 	this.avoidData = [];
+
 	this.cellData = [];
+	
 	this.colorCircData = [];
 	this.whitePop = [];
     this.totalPopCell = [];
@@ -139,23 +145,26 @@ Automata.prototype.updateData = function () {
 			
         }
     }
+	this.cellAgentFoodDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(cellData)));
+	this.poisonAvoidDiff.push(findBiggestDiff(makeAggr(poisonData), makeAggr(avoidData)));
+	this.foodAttractDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(attractData)));
 	
-    /*this.weightData.push(weightData);
-    this.weightHist.data = this.weightData;
+    this.weightData.push(weightData);
+    //this.weightHist.data = this.weightData;
 	
 	this.poisonData.push(poisonData);
-    this.poisonHist.data = this.poisonData;
+    //this.poisonHist.data = this.poisonData;
 	
 	this.attractData.push(attractData);
-    this.attractHist.data = this.attractData;
+    //this.attractHist.data = this.attractData;
 	
 	this.avoidData.push(avoidData);
-    this.avoidHist.data = this.avoidData;
+    //this.avoidHist.data = this.avoidData;
 	
 	this.cellData.push(cellData);
-	this.cellHist.data = this.cellData;
+	//this.cellHist.data = this.cellData;
 	
-	this.colorCirc.data = colorCircData;*/
+	//this.colorCirc.data = colorCircData;
 	
     this.totalPopCell.push(totalPopCell);
 	
@@ -168,13 +177,16 @@ Automata.prototype.updateData = function () {
 }
 
 Automata.prototype.serialize = function (skip) {
-    var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells\n";
+    var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells,agentCellFoodDiff,avoidPoisonDiff,attractFoodDiff\n";
     for(var i = 0; i < this.totalPopAgent.length; i += skip) {
         text += i + ",";
         text += this.totalPopAgent[i] + ",";
         text += this.totalPopCell[i] + ",";
 		text += this.standardDeviationAgent[i] + ",";
-		text += this.standardDeviation[i] + "\n";
+		text += this.standardDeviation[i] + ",";
+		text += this.cellAgentFoodDiff[i] + ",";
+		text += this.poisonAvoidDiff[i] + ",";
+		text += this.foodAttractDiff[i] + "\n";
     }
 
     return text;
