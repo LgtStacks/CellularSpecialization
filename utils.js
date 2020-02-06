@@ -1,3 +1,25 @@
+function makeAggr(list1) {
+	var retList = [];
+	retList.push(list1[0]);
+	for(var l =1; l< list1.length; l++){
+		retList.push(retList[l-1]+list1[l]);
+	}
+	for(var j = 0; j< retList.length; j++) {
+		retList[j] = retList[j] / retList[retList.length - 1];
+	}
+	return retList;
+};
+function findBiggestDiff(list1, list2) {
+	var biggestDif = -1;
+	for(var i = 0; i < list1.length; i++){
+		var diff = Math.abs(list1[i] - list2[i]);
+		if(diff > biggestDif) {
+			biggestDif = diff;
+		}
+	}
+	return biggestDif;
+};
+
 function download(filename, data) {
     var pom = document.createElement('a');
     var blob = new Blob([data], {type:"octet/stream"});

@@ -30,14 +30,23 @@
 		<br>
 		<input type="radio" name="stability" value="stable" id = "stable" onclick="preset_stable()"> Stable<br>
 		<input type="radio" name="stability" value="volatile" id = "volatile" onclick="preset_volatile()"> Volatile<br>
+		
+		<input type="radio" name="cellOpt" value="cellStable" id = "cellStable" onclick="preset_cell_stable()"> Cell Stable<br>
+		<input type="radio" name="cellOpt" value="cellMid" id = "cellMid" onclick="preset_cell_mid()"> Cell Mid<br>
+		<input type="radio" name="cellOpt" value="cellVol" id = "cellVol" onclick="preset_cell_volatile()"> Cell Vol<br>
+		<br>
+		<input type="radio" name="agentOpt" value="agentStable" id = "agentStable" onclick="preset_agent_stable()"> Agent Stable<br>
+		<input type="radio" name="agentOpt" value="agentMid" id = "agentMid" onclick="preset_agent_mid()"> Agent Mid<br>
+		<input type="radio" name="agentOpt" value="agentVol" id = "agentVol" onclick="preset_agent_volatile()"> Agent Vol<br>
+		
 		<br><br>
-		DL/DB Time: <input type="text" name="waitDLDB" id="waitDLDB" value="1000"><br>
+		DL/DB Time: <input type="text" name="waitDLDB" id="waitDLDB" value="10000"><br>
 		DB Send: <input type="checkbox" name="DB" id="DB"><br>
         Download: <input type="checkbox" name="download" id="download" checked><br>
         AI Enabled: <input type="checkbox" name="brainPower" id="brainPower" checked><br>
         Healing Toggle: <input type="checkbox" name="healingToggle" id="healingToggle" checked><br>
 		Wait Turns: <input type="text" name="waitTurns" id="waitTurns" value="300"><br>
-		Max Hits: <input type="text" name="maxHits" id="maxHits" value="7"><br>
+		Max Hits: <input type="text" name="maxHits" id="maxHits" value="10"><br>
 		Spawning Population: <input type="text" name="spawningPopulation" id="spawningPopulation" value="50"><br>
 		Death Chance Agent: <input type="text" name="deathChanceAgent" id="deathChanceAgent" value="0.015"><br>
 		Cell Growth Rate: <input type="text" name="cellGrowthRate" id="cellGrowthRate" value="0.2"><br>

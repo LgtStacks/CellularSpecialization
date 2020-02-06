@@ -11,12 +11,17 @@ function Automata(game, title) {
 
 
 	 // data gathering
-	
+	this.cellAgentFoodDiff = [];
+	this.poisonAvoidDiff = [];
+	this.foodAttractDiff = [];
     this.weightData = [];
+	
 	this.poisonData = [];
 	this.attractData = [];
 	this.avoidData = [];
+
 	this.cellData = [];
+	
 	this.colorCircData = [];
 	this.whitePop = [];
     this.totalPopCell = [];
@@ -31,24 +36,24 @@ function Automata(game, title) {
 	
 	//this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
     //this.game.addEntity(this.popGraph);
+	/*
+    this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
+    this.game.addEntity(this.weightHist);
 	
-    //this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
-    //this.game.addEntity(this.weightHist);
+	this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
+    this.game.addEntity(this.poisonHist);
 	
-	//this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
-    //this.game.addEntity(this.poisonHist);
+	this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
+    this.game.addEntity(this.attractHist);
 	
-	//this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
-    //this.game.addEntity(this.attractHist);
+	this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
+    this.game.addEntity(this.avoidHist);
 	
-	//this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
-    //this.game.addEntity(this.avoidHist);
+	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
+	this.game.addEntity(this.cellHist);
 	
-	//this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
-	//this.game.addEntity(this.cellHist);
-	
-	//this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
-	//this.game.addEntity(this.colorCirc);
+	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
+	this.game.addEntity(this.colorCirc);*/
 	
     // create board
     this.board = [];
@@ -140,24 +145,27 @@ Automata.prototype.updateData = function () {
 			
         }
     }
-	/*
+	this.cellAgentFoodDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(cellData)));
+	this.poisonAvoidDiff.push(findBiggestDiff(makeAggr(poisonData), makeAggr(avoidData)));
+	this.foodAttractDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(attractData)));
+	
     this.weightData.push(weightData);
-    this.weightHist.data = this.weightData;
+    //this.weightHist.data = this.weightData;
 	
 	this.poisonData.push(poisonData);
-    this.poisonHist.data = this.poisonData;
+    //this.poisonHist.data = this.poisonData;
 	
 	this.attractData.push(attractData);
-    this.attractHist.data = this.attractData;
+    //this.attractHist.data = this.attractData;
 	
 	this.avoidData.push(avoidData);
-    this.avoidHist.data = this.avoidData;
+    //this.avoidHist.data = this.avoidData;
 	
 	this.cellData.push(cellData);
-	this.cellHist.data = this.cellData;
+	//this.cellHist.data = this.cellData;
 	
-	this.colorCirc.data = colorCircData;
-	*/
+	//this.colorCirc.data = colorCircData;
+	
     this.totalPopCell.push(totalPopCell);
 	
 	this.standardDeviation.push(standardDeviation);
@@ -169,13 +177,16 @@ Automata.prototype.updateData = function () {
 }
 
 Automata.prototype.serialize = function (skip) {
-    var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells\n";
+    var text = "tick,popCountAgent,popCountCell,stdDevAgents,stdDevCells,agentCellFoodDiff,avoidPoisonDiff,attractFoodDiff\n";
     for(var i = 0; i < this.totalPopAgent.length; i += skip) {
         text += i + ",";
-        text += this.totalPopCell[i] + ",";
         text += this.totalPopAgent[i] + ",";
+        text += this.totalPopCell[i] + ",";
 		text += this.standardDeviationAgent[i] + ",";
-		text += this.standardDeviation[i] + "\n";
+		text += this.standardDeviation[i] + ",";
+		text += this.cellAgentFoodDiff[i] + ",";
+		text += this.poisonAvoidDiff[i] + ",";
+		text += this.foodAttractDiff[i] + "\n";
     }
 
     return text;
@@ -206,7 +217,8 @@ Automata.prototype.update = function () {
             this.board[i][j].update();
         }
     }
-	if(this.updateCounter % 10 == 0){
+	//HOW OFTEN THE DATA IS UPDATED
+	if(this.updateCounter % 100 == 0){
 		this.updateData();
 	}
 	if(this.updateCounter == params.DLDB && socket && document.getElementById("DB").checked) {
@@ -224,27 +236,6 @@ Automata.prototype.update = function () {
 		var filename = this.title;
 		download(filename + "-stats.csv", this.serialize(1));
 	}
-	/*
-	if(this.updateCounter % (4*params.DLDB) == 0){
-		document.getElementById("sparse").checked = true;
-		document.getElementById("stable").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % (3*params.DLDB) == 0){
-		document.getElementById("sparse").checked = true;
-		document.getElementById("volatile").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % (2*params.DLDB) == 0){
-		document.getElementById("dense").checked = true;
-		document.getElementById("stable").checked = true;
-		document.getElementById("simStart").click();
-	}
-	else if(this.updateCounter % params.DLDB == 0){
-		document.getElementById("dense").checked = true;
-		document.getElementById("volatile").checked = true;
-		document.getElementById("simStart").click();
-	}*/
 };
 
 Automata.prototype.draw = function (ctx) {
