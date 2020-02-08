@@ -31,12 +31,12 @@ function Automata(game, title) {
     // graphs
 	
 	
-    //this.popGraph = new Graph(game, 1210, 200, this, "Population");
-    //this.game.addEntity(this.popGraph);
+    this.popGraph = new Graph(game, 1210, 200, this, "Cell Population/Std Dev");
+    this.game.addEntity(this.popGraph);
 	
-	//this.popGraph = new Graph2(game, 1610, 200, this, "Agent Data");
-    //this.game.addEntity(this.popGraph);
-	/*
+	this.popGraph = new Graph2(game, 1610, 200, this, "Agent Population/Std Dev");
+    this.game.addEntity(this.popGraph);
+
     this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
     this.game.addEntity(this.weightHist);
 	
@@ -53,7 +53,7 @@ function Automata(game, title) {
 	this.game.addEntity(this.cellHist);
 	
 	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
-	this.game.addEntity(this.colorCirc);*/
+	this.game.addEntity(this.colorCirc);
 	
     // create board
     this.board = [];
@@ -103,8 +103,8 @@ Automata.prototype.updateData = function () {
     for (var i = 0; i < 100; i++) {
         for (var j = 0; j < 100; j++) {
             var cell = this.board[i][j];
-			cellGenomes.push(cell.genome);
-			if (cell.color !== "Black") {
+			if (cell.color !== "Black" && cell.color !== "White") {
+				cellGenomes.push(cell.genome);
 				totalPopCell+=1;
 			}
             
@@ -150,21 +150,21 @@ Automata.prototype.updateData = function () {
 	this.foodAttractDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(attractData)));
 	
     this.weightData.push(weightData);
-    //this.weightHist.data = this.weightData;
+    this.weightHist.data = this.weightData;
 	
 	this.poisonData.push(poisonData);
-    //this.poisonHist.data = this.poisonData;
+    this.poisonHist.data = this.poisonData;
 	
 	this.attractData.push(attractData);
-    //this.attractHist.data = this.attractData;
+    this.attractHist.data = this.attractData;
 	
 	this.avoidData.push(avoidData);
-    //this.avoidHist.data = this.avoidData;
+    this.avoidHist.data = this.avoidData;
 	
 	this.cellData.push(cellData);
-	//this.cellHist.data = this.cellData;
+	this.cellHist.data = this.cellData;
 	
-	//this.colorCirc.data = colorCircData;
+	this.colorCirc.data = colorCircData;
 	
     this.totalPopCell.push(totalPopCell);
 	
@@ -218,7 +218,7 @@ Automata.prototype.update = function () {
         }
     }
 	//HOW OFTEN THE DATA IS UPDATED
-	if(this.updateCounter % 100 == 0){
+	if(this.updateCounter % 10 == 0){
 		this.updateData();
 	}
 	if(this.updateCounter == params.DLDB && socket && document.getElementById("DB").checked) {
