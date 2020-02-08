@@ -143,7 +143,10 @@ Graph.prototype.draw = function (ctx) {
     this.ctx.strokeStyle = "#000000";
     this.ctx.lineWidth = 1;
     this.ctx.strokeRect(this.x, this.y, this.xSize, this.ySize);
-
+	
+	this.ctx.fillStyle = "#000000";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText(this.label, this.x + this.xSize / 2, this.y + this.ySize + 10);
 }
 
 Graph.prototype.updateMax = function () {

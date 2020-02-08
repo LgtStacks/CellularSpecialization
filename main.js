@@ -34,7 +34,7 @@ var gameEngine = new GameEngine();
 function initiliaze_game(){
 	getSettings();
 	gameEngine.entities = [];
-	var automata2 = new Automata(gameEngine);
+	var automata2 = new ExpManager(gameEngine);
 	gameEngine.addEntity(automata2);
-	gameEngine.board = automata2;
+	gameEngine.board = automata2.automata;
 }

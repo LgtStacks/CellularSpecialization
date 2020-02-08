@@ -33,7 +33,7 @@ function Agent(game, x, y, agent) {
 		this.genomePoison = Math.random();
 		this.genomeAttract = Math.random();
 		this.genomeAvoid = Math.random();
-		this.genomeHealPoisonRange = 1/6;
+		this.genomeHealPoisonRange = params.healPoisonRange;
     }
 
     var val = Math.floor(360 * this.genomeFood);
@@ -75,19 +75,19 @@ Agent.prototype.update = function () {
 		//Landed in a colored square
 		var dist = distance(Math.floor(360 * this.genomeFood), Math.floor(360 * cell.genome));//Calculate distance
 		var dist2 = distance(Math.floor(360 * this.genomePoison), Math.floor(360 * cell.genome));
+		
 		if((Math.random() * this.genomeHealPoisonRange * 180) > dist2){
 			this.hits--;
 			cell.color = "Black";
-			//console.log("Poisoned");
+			console.log("poisoned" + dist2)
 		}
 		if((Math.random() * this.genomeHealPoisonRange * 180) > dist) {
 			if (this.hits < this.maxHits && params.healingToggle) this.hits++;
             cell.color = "White";
-			//console.log("Healed");
+			console.log("healed" + dist)
 		}
 		if(cell.color !== "White") {
 			cell.color = "Black";
-			//console.log("Nothing");
 		}
 		
 	}

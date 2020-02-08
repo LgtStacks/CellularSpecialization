@@ -15,6 +15,7 @@ function preset_volatile() {
 	document.getElementById("cellSpawn").value = 0.01;
 	document.getElementById("cellOffspringVolatility").value = 0.15;
 }
+//CURRENTLY BEING USED
 
 function preset_cell_stable() {
 	document.getElementById("cellOffspringVolatility").value = 0.005;
