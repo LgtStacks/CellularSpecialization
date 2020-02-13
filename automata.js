@@ -52,6 +52,9 @@ function Automata(game, title) {
 	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
 	this.game.addEntity(this.cellHist);
 	
+	this.cellFoodDiffHist = new Histogram(game, 1610, 400, "Cell/Food Diff Dist.")
+	this.game.addEntity(this.cellFoodDiffHist);
+	
 	this.colorCirc = new colorCircle(game, 1390, 590, "Poison Genome Dist.");
 	this.game.addEntity(this.colorCirc);
 	
@@ -146,6 +149,9 @@ Automata.prototype.updateData = function () {
         }
     }
 	this.cellAgentFoodDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(cellData)));
+	this.cellFoodDiffHist.data = getDiffList(makeAggr(weightData), makeAggr(cellData));
+	
+	
 	this.poisonAvoidDiff.push(findBiggestDiff(makeAggr(poisonData), makeAggr(avoidData)));
 	this.foodAttractDiff.push(findBiggestDiff(makeAggr(weightData), makeAggr(attractData)));
 	

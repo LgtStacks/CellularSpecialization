@@ -131,12 +131,6 @@ Agent.prototype.update = function () {
             var probs = [];
             for (var i = 0; i < neighs.length; i++) {
                 var cellInQuestion = neighs[i];
-                if (cellInQuestion.color === "Red") {
-                    probs.push((1 - this.genome) * 150);
-                }
-                else if (cellInQuestion.color === "Green") {
-                    probs.push(this.genome * 150);
-                }
                 if (cellInQuestion.color === "Black") {
                     probs.push(10);
                 }
@@ -149,12 +143,12 @@ Agent.prototype.update = function () {
 					var attrValue = 0;
 					var avoidValue = 0;
 					if((Math.random() * params.attrAvoidRange) > attrDist) {
-						attrValue = (1 - attrDist); //put attract score 0-180
+						attrValue = (params.attrAvoidRange - attrDist); //put attract score 0-180
 					}
 					if((Math.random() * params.attrAvoidRange) > avoidDist){
-						avoidValue = (1 - avoidDist); //put avoid score 0-180
+						avoidValue = (params.attrAvoidRange - avoidDist); //put avoid score 0-180
 					}
-					var totalValue = attrValue - avoidValue;
+					var totalValue = (attrValue - avoidValue) * 10;
 					if(attrValue == 0 && avoidValue == 0){ //if you miss the attract and avoid genomes you get a base score of 10
 						totalValue = 10;
 					}

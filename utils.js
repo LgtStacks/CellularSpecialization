@@ -19,6 +19,13 @@ function findBiggestDiff(list1, list2) {
 	}
 	return biggestDif;
 };
+function getDiffList(list1, list2) {
+	var ret = [];
+	for(var i = 0; i< 20; i++) {
+		ret.push(Math.abs(list1[i] - list2[i]));	
+	}
+	return ret;
+};
 
 function download(filename, data) {
     var pom = document.createElement('a');
