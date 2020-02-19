@@ -2,7 +2,7 @@ function ExpManager(game) {
 	//document.getElementById("dense").click();
 	//document.getElementById("volatile").click();
 	//this.game = game;
-	this.automata = new Automata(game);
+	this.automata = new Automata(game, "test");
 	//this.tick = 0;
 	//this.run = 0;
 	//this.title = "CellVolAgentVol#0";

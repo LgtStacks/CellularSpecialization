@@ -79,12 +79,10 @@ Agent.prototype.update = function () {
 		if((Math.random() * this.genomeHealPoisonRange * 180) > dist2){
 			this.hits--;
 			cell.color = "Black";
-			console.log("poisoned" + dist2)
 		}
 		if((Math.random() * this.genomeHealPoisonRange * 180) > dist) {
 			if (this.hits < this.maxHits && params.healingToggle) this.hits++;
             cell.color = "White";
-			console.log("healed" + dist)
 		}
 		if(cell.color !== "White") {
 			cell.color = "Black";

@@ -74,6 +74,28 @@ function Automata(game, title) {
     }
 
 };
+Automata.prototype.logData = function () {
+    var data = {
+        run: this.title,
+        foodData: this.weightData,
+        poisonData: this.poisonData,
+        attractData: this.attractData,
+        avoidData: this.avoidData,
+        cellData: this.cellData,
+		popCells: this.totalPopCell,
+		popAgents: this.totalPopAgent,
+		deviationAgent: this.standardDeviationAgent,
+		deviationCell: this.standardDeviation,
+		cellFoodDiff: this.cellAgentFoodDiff,
+		poisonAvoidDiff: this.poisonAvoidDiff,
+		foodAttractDiff: this.foodAttractDiff
+    };
+
+    if (socket) {
+		socket.emit("saveCA", data);
+		console.log("sent to database");
+	}
+};
 Automata.prototype.updateData = function () {
 	var cellGenomes = [];
 	var agentGenomes = [];
@@ -224,14 +246,7 @@ Automata.prototype.update = function () {
 		this.updateData();
 	}
 	if(this.updateCounter == params.DLDB && socket && document.getElementById("DB").checked) {
-        var runStats = {
-			popAgent: this.totalPopAgent,
-			popCell: this.totalPopCell,
-			stdDevAgents: this.standardDeviationAgent,
-			stdDevCells: this.standardDeviation
-        }
-        socket.emit("saveGS", runStats);
-        console.log("Sent to DB");
+       this.logData();
     }
 
 	if(this.updateCounter == params.DLDB && document.getElementById("download").checked){
