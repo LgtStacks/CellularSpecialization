@@ -13,7 +13,9 @@ function Agent(game, x, y, agent) {
         if (this.genomePoison < 0) this.genomePoison = this.genomePoison + 1;
         if (this.genomePoison > 1) this.genomePoison = this.genomePoison - 1;
 		
-		var bit2 = randomInt(2);
+		this.genomeAttract = this.genomeFood;
+		this.genomeAvoid = this.genomePoison;
+		/*var bit2 = randomInt(2);
         this.genomeAttract = agent.genomeAttract + Math.pow(-1, bit2) * Math.random() * params.offspringVolatility;
         if (this.genomeAttract < 0) this.genomeAttract = this.genomeAttract + 1;
         if (this.genomeAttract > 1) this.genomeAttract = this.genomeAttract - 1;
@@ -21,18 +23,18 @@ function Agent(game, x, y, agent) {
 		var bit3 = randomInt(2);
         this.genomeAvoid = agent.genomeAvoid + Math.pow(-1, bit3) * Math.random() * params.offspringVolatility;
         if (this.genomeAvoid < 0) this.genomeAvoid = this.genomeAvoid + 1;
-        if (this.genomeAvoid > 1) this.genomeAvoid = this.genomeAvoid - 1;
+        if (this.genomeAvoid > 1) this.genomeAvoid = this.genomeAvoid - 1;*/
 		
 		var bit4 = randomInt(2);
-		this.genomeHealPoisonRange = agent.genomeHealPoisonRange + Math.pow(-1, bit3) * Math.random() * params.offspringVolatility;
+		this.genomeHealPoisonRange = agent.genomeHealPoisonRange + Math.pow(-1, bit4) * Math.random() * params.offspringVolatility;
 		if (this.genomeHealPoisonRange < 0) this.genomeHealPoisonRange = 0;
 		if (this.genomeHealPoisonRange > 1) this.genomeHealPoisonRange = 1;
     }
     else {
         this.genomeFood = Math.random();
 		this.genomePoison = Math.random();
-		this.genomeAttract = Math.random();
-		this.genomeAvoid = Math.random();
+		this.genomeAttract = this.genomeFood;
+		this.genomeAvoid = this.genomePoison;
 		this.genomeHealPoisonRange = params.healPoisonRange;
     }
 
