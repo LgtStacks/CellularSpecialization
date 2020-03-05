@@ -15,6 +15,7 @@ function Automata(game, title) {
 	this.poisonAvoidDiff = [];
 	this.foodAttractDiff = [];
     this.weightData = [];
+	this.healPoiData = [];
 	
 	this.poisonData = [];
 	this.attractData = [];
@@ -32,13 +33,15 @@ function Automata(game, title) {
 	
 	
     this.popGraph = new Graph(game, 1210, 200, this, "Cell Population/Std Dev");
-    this.game.addEntity(this.popGraph);
+    //this.game.addEntity(this.popGraph);
 	
 	this.popGraph = new Graph2(game, 1610, 200, this, "Agent Population/Std Dev");
-    this.game.addEntity(this.popGraph);
+    //this.game.addEntity(this.popGraph);
 
     this.weightHist = new Histogram(game, 810, 0, "Food Genome Dist.")
     this.game.addEntity(this.weightHist);
+	
+	
 	
 	this.poisonHist = new Histogram(game, 810, 200, "Poison Genome Dist.")
     this.game.addEntity(this.poisonHist);
@@ -46,8 +49,8 @@ function Automata(game, title) {
 	this.attractHist = new Histogram(game, 810, 400, "Attract Food Difference Dist.")
     this.game.addEntity(this.attractHist);
 	
-	this.avoidHist = new Histogram(game, 810, 600, "Avoid Poison Difference Dist.")
-    this.game.addEntity(this.avoidHist);
+	this.healPoiHist = new Histogram(game, 810, 600, "Heal Poison Range")
+    this.game.addEntity(this.healPoiHist);
 	
 	this.cellHist = new Histogram(game, 1210, 0, "Cell Dist.")
 	this.game.addEntity(this.cellHist);
@@ -88,7 +91,8 @@ Automata.prototype.logData = function () {
 		deviationCell: this.standardDeviation,
 		cellFoodDiff: this.cellAgentFoodDiff,
 		poisonAvoidDiff: this.poisonAvoidDiff,
-		foodAttractDiff: this.foodAttractDiff
+		foodAttractDiff: this.foodAttractDiff,
+		healPoiData: this.healPoiData
     };
 
     if (socket) {
@@ -100,6 +104,7 @@ Automata.prototype.updateData = function () {
 	var cellGenomes = [];
 	var agentGenomes = [];
     var weightData = [];
+	var healPoiData = [];
 	var poisonData = [];
 	var attractData = [];
 	var avoidData = [];
@@ -113,6 +118,7 @@ Automata.prototype.updateData = function () {
 	//console.log(standardDeviation);
 	
     for (var i = 0; i < 20; i++) {
+		healPoiData.push(0);
         weightData.push(0);
 		poisonData.push(0);
 		attractData.push(0);
@@ -141,6 +147,9 @@ Automata.prototype.updateData = function () {
     for (var k = 0; k < this.agents.length; k++) {
         var weightIndex = Math.floor(this.agents[k].genomeFood * 20) < 20 ? Math.floor(this.agents[k].genomeFood * 20) : 19;
         weightData[weightIndex]++;
+		
+		var healPoiIndex = Math.floor(this.agents[k].genomeHealPoisonRange * 20) < 20 ? Math.floor(this.agents[k].genomeHealPoisonRange * 20) : 19;
+        healPoiData[healPoiIndex]++;
 		
 		var poisonIndex = Math.floor(this.agents[k].genomePoison * 20) < 20 ? Math.floor(this.agents[k].genomePoison * 20) : 19;
         poisonData[poisonIndex]++;
@@ -176,6 +185,9 @@ Automata.prototype.updateData = function () {
     this.weightData.push(weightData);
     this.weightHist.data = this.weightData;
 	
+	this.healPoiData.push(healPoiData);
+	this.healPoiHist.data = this.healPoiData;
+	
 	this.poisonData.push(poisonData);
     this.poisonHist.data = this.poisonData;
 	
@@ -183,7 +195,7 @@ Automata.prototype.updateData = function () {
     this.attractHist.data = this.attractData;
 	
 	this.avoidData.push(avoidData);
-    this.avoidHist.data = this.avoidData;
+    //this.avoidHist.data = this.avoidData;
 	
 	this.cellData.push(cellData);
 	this.cellHist.data = this.cellData;

@@ -86,8 +86,8 @@ function getSettings() {
 	params.offspringVolatility = parseFloat(document.getElementById("offspringVolatility").value);
 	params.cellSpawn = parseFloat(document.getElementById("cellSpawn").value);
 	params.cellOffspringVolatility = parseFloat(document.getElementById("cellOffspringVolatility").value);
-	params.healPoisonRange = parseInt(document.getElementById("healPoisonRange").value);
-	params.attrAvoidRange = parseInt(document.getElementById("attrAvoidRange").value);
+	params.healPoisonRange = parseFloat(document.getElementById("healPoisonRange").value);
+	params.attrAvoidRange = parseFloat(document.getElementById("attrAvoidRange").value);
 }
 function randomInt(n) {
     return Math.floor(Math.random() * n);

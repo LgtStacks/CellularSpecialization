@@ -2,7 +2,7 @@ function ExpManager(game) {
 	//document.getElementById("dense").click();
 	//document.getElementById("volatile").click();
 	this.game = game;
-	this.automata = new Automata(game, "sameVol");
+	//this.automata = new Automata(game, "sameVol");
 	this.tick = 0;
 	//this.run = 0;
 	//this.title = "CellVolAgentVol#0";
@@ -10,8 +10,9 @@ function ExpManager(game) {
 
 ExpManager.prototype.update = function() {
 	if(this.tick % params.DLDB == 0){
-		this.game.entities = [];
-		this.automata = new Automata(game, "sameVol");
+		this.game.entities = [this];
+		this.automata = new Automata(this.game, "test3");
+		this.game.board = this.automata;
 	//	this.FreshStart();
 	//	this.run++;
 	}

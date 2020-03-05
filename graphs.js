@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     context.fillStyle = "#eeeeee";
     context.fillRect(0, 0, width, height);
     context.fillRect(0, 120, width, height);
-    socket.emit("loadCA", { run: "sameVol"});
+    socket.emit("loadCA", { run: "test3"});
 
     document.getElementById("queryButton").addEventListener("click", function (e) {
         var query = parseInt(document.getElementById("runToQuery").value);
@@ -90,6 +90,7 @@ function parseData(data) {
 	var histogramAttract = [];
 	var histogramAvoid = [];
 	var	histogramCell = [];
+	var histogramHealPoi = [];
 
     for (var i = 0; i < ticks; i++) {
 		histogramFood.push([]);
@@ -97,12 +98,14 @@ function parseData(data) {
 		histogramAttract.push([]);
 		histogramAvoid.push([]);
 		histogramCell.push([]);
+		histogramHealPoi.push([]);
         for (var j = 0; j < 20; j++) {
 			histogramFood[i].push(0);
 			histogramPoison[i].push(0);
 			histogramAttract[i].push(0);
 			histogramAvoid[i].push(0);
 			histogramCell[i].push(0);
+			histogramHealPoi[i].push(0);
         }
     }
 
@@ -114,6 +117,7 @@ function parseData(data) {
 				histogramAttract[j][k] += data[i].attractData[j][k] / totalAgents[j];
 				histogramAvoid[j][k] += data[i].avoidData[j][k] / totalAgents[j];
 				histogramCell[j][k] += data[i].cellData[j][k] / totalCells[j];
+				histogramHealPoi[j][k] += data[i].healPoiData[j][k] / totalAgents[j];
             }
         }
     }
@@ -132,7 +136,8 @@ function parseData(data) {
 		histogramPoison: histogramPoison,
 		histogramAttract: histogramAttract,
 		histogramAvoid: histogramAvoid,
-		histogramCell: histogramCell
+		histogramCell: histogramCell,
+		histogramHealPoi: histogramHealPoi
 	};
     drawData(obj, runs, context);
 }
@@ -189,6 +194,8 @@ function drawData(obj, runs, ctx) {
     drawHistogram(ctx, 600, obj.histogramAttract, "Attract Genome");
     drawHistogram(ctx, 720, obj.histogramAvoid, "Avoid Genome");
     drawHistogram(ctx, 840, obj.histogramCell, "Cell Genome");
+	drawHistogram(ctx, 960, obj.histogramHealPoi, "Cell Genome");
+	
     ctx.font = "14px Arial";
     ctx.fillText("Query: " + obj.query + " Runs: " + runs, 15, 740);
 }

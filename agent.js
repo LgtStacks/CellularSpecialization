@@ -25,6 +25,7 @@ function Agent(game, x, y, agent) {
         if (this.genomeAvoid < 0) this.genomeAvoid = this.genomeAvoid + 1;
         if (this.genomeAvoid > 1) this.genomeAvoid = this.genomeAvoid - 1;*/
 		
+		
 		var bit4 = randomInt(2);
 		this.genomeHealPoisonRange = agent.genomeHealPoisonRange + Math.pow(-1, bit4) * Math.random() * params.offspringVolatility;
 		if (this.genomeHealPoisonRange < 0) this.genomeHealPoisonRange = 0;
@@ -78,11 +79,11 @@ Agent.prototype.update = function () {
 		var dist = distance(Math.floor(360 * this.genomeFood), Math.floor(360 * cell.genome));//Calculate distance
 		var dist2 = distance(Math.floor(360 * this.genomePoison), Math.floor(360 * cell.genome));
 		
-		if((Math.random() * this.genomeHealPoisonRange * 180) > dist2){
+		if((Math.random() * params.healPoisonRange * 180) > dist2){
 			this.hits--;
 			cell.color = "Black";
 		}
-		if((Math.random() * this.genomeHealPoisonRange * 180) > dist) {
+		if((Math.random() * params.healPoisonRange * 180) > dist) {
 			if (this.hits < this.maxHits && params.healingToggle) this.hits++;
             cell.color = "White";
 		}
