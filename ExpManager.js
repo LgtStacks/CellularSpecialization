@@ -1,20 +1,22 @@
 function ExpManager(game) {
 	//document.getElementById("dense").click();
 	//document.getElementById("volatile").click();
-	//this.game = game;
-	this.automata = new Automata(game, "test");
-	//this.tick = 0;
+	this.game = game;
+	this.automata = new Automata(game, "sameVol");
+	this.tick = 0;
 	//this.run = 0;
 	//this.title = "CellVolAgentVol#0";
 }
 
 ExpManager.prototype.update = function() {
-	//if(this.tick % params.DLDB == 0){
+	if(this.tick % params.DLDB == 0){
+		this.game.entities = [];
+		this.automata = new Automata(game, "sameVol");
 	//	this.FreshStart();
 	//	this.run++;
-	//}
+	}
 	this.automata.update();
-	//this.tick++;
+	this.tick++;
 }
 
 ExpManager.prototype.draw = function(ctx) {
