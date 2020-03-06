@@ -1,9 +1,10 @@
 var socket = io.connect("http://24.16.255.56:8888");
 var context;
-var ticks = 100;
-var maxRuns = 100;
+var ticks = 1000;
+var maxRuns = 1;
 var height = 100;
 var xDelta = 2;
+var deleteRuns = 10;
 var width = xDelta * ticks;
 
 socket.on("connect", function () {
@@ -55,6 +56,7 @@ function parseData(data) {
 	var maxDevCell = 0;
 	var maxDiff = 0;
     var runs = Math.min(maxRuns, data.length);
+	data.splice(0,deleteRuns);
 	
 	for (var i = 0; i < runs; i++) {
         for (var j = 0; j < data[i].popAgents.length; j++) {
@@ -194,7 +196,7 @@ function drawData(obj, runs, ctx) {
     drawHistogram(ctx, 600, obj.histogramAttract, "Attract Genome");
     drawHistogram(ctx, 720, obj.histogramAvoid, "Avoid Genome");
     drawHistogram(ctx, 840, obj.histogramCell, "Cell Genome");
-	drawHistogram(ctx, 960, obj.histogramHealPoi, "Cell Genome");
+	drawHistogram(ctx, 960, obj.histogramHealPoi, "Heal Poison");
 	
     ctx.font = "14px Arial";
     ctx.fillText("Query: " + obj.query + " Runs: " + runs, 15, 740);
