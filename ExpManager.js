@@ -11,7 +11,7 @@ function ExpManager(game) {
 ExpManager.prototype.update = function() {
 	if(this.tick % params.DLDB == 0){
 		this.game.entities = [this];
-		this.automata = new Automata(this.game, "test3");
+		this.automata = new Automata(this.game, "actualRuns");
 		this.game.board = this.automata;
 	//	this.FreshStart();
 	//	this.run++;

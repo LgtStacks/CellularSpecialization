@@ -80,6 +80,7 @@ function Automata(game, title) {
 Automata.prototype.logData = function () {
     var data = {
         run: this.title,
+		params: params,
         foodData: this.weightData,
         poisonData: this.poisonData,
         attractData: this.attractData,

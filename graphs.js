@@ -1,11 +1,13 @@
+//Settings are .2, .25, .3, .33
 var socket = io.connect("http://24.16.255.56:8888");
 var context;
 var ticks = 1000;
 var maxRuns = 1;
 var height = 100;
 var xDelta = 2;
-var deleteRuns = 10;
+var deleteRuns = 0;
 var width = xDelta * ticks;
+var array;
 
 socket.on("connect", function () {
     console.log("connected on output");
@@ -17,23 +19,30 @@ document.addEventListener("DOMContentLoaded", function (event) {
     context.fillStyle = "#eeeeee";
     context.fillRect(0, 0, width, height);
     context.fillRect(0, 120, width, height);
-    socket.emit("loadCA", { run: "test3"});
+    socket.emit("loadCA", { run: "actualRuns", "params.healPoisonRange": .2});
 
     document.getElementById("queryButton").addEventListener("click", function (e) {
         var query = parseInt(document.getElementById("runToQuery").value);
-        socket.emit("loadCA", {run: query});
+        socket.emit("loadCA", {run: "actualRuns", "params.healPoisonRange": query});
+    }, false);
+	
+	document.getElementById("nextButton").addEventListener("click", function (e) {
+        deleteRuns++;
+		if(deleteRuns > array.length) {
+			document.getElementById("nextButton").disabled = true;
+		}
+		var copy = array.slice();
+		parseData(copy);
     }, false);
 });
 
 socket.on("loadCA", function (e) {
-    var array = e;
+    array = e;
     parseData(array);
 });
 
 function parseData(data) {
-	for(var i = 0; i< data.length; i++){
-		console.log(data[i].deviationCell);
-	}
+	console.log(data);
 	var arrAgents = [];
 	var arrDevAgents = [];
 	var arrCells = [];
@@ -199,7 +208,7 @@ function drawData(obj, runs, ctx) {
 	drawHistogram(ctx, 960, obj.histogramHealPoi, "Heal Poison");
 	
     ctx.font = "14px Arial";
-    ctx.fillText("Query: " + obj.query + " Runs: " + runs, 15, 740);
+    ctx.fillText("Query: " + obj.query + " Runs: " + runs, 15, 980);
 }
 
 function drawGraph(ctx, color, start, obj, maxVal, labeling) {
